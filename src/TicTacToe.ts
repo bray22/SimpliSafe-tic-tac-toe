@@ -11,7 +11,9 @@ export class TicTacToe {
     return (
       this.checkRows(board) ??
       this.checkColumns(board) ??
-      this.checkDiagonals(board)
+      this.checkDiagonals(board) ??
+      this.checkCorners(board) ??
+      this.checkBoxes(board)
     );
   }
   public anyMovesLeft(board: Board): boolean {
@@ -19,7 +21,7 @@ export class TicTacToe {
   }
 
   public isGameOver(board: Board): boolean {
-    throw new Error("Not implemented");
+    return this.checkWinner(board) !== null || !this.anyMovesLeft(board);
   }
 
   private readonly size = 4;
@@ -33,7 +35,7 @@ export class TicTacToe {
     }
   }
 
-  private allSame(cells: Cell[]): Player | null {
+  private allSame(cells: readonly [Cell, Cell, Cell, Cell]): Player | null {
     const first = cells[0];
 
     if (first === null) {
@@ -59,12 +61,44 @@ export class TicTacToe {
   // vertical win
   private checkColumns(board: Board): Player | null {
     for (let col = 0; col < this.size; col++) {
-      const cells = board.map((row) => row[col]);
+      const cells: Row = [
+        board[0][col],
+        board[1][col],
+        board[2][col],
+        board[3][col],
+      ];
 
       const winner = this.allSame(cells);
 
       if (winner) {
         return winner;
+      }
+    }
+
+    return null;
+  }
+
+  private checkCorners(board: Board): Player | null {
+    const corners: Row = [board[0][0], board[0][3], board[3][0], board[3][3]];
+
+    return this.allSame(corners);
+  }
+
+  private checkBoxes(board: Board): Player | null {
+    for (let row = 0; row < this.size - 1; row++) {
+      for (let col = 0; col < this.size - 1; col++) {
+        const cells: Row = [
+          board[row][col],
+          board[row][col + 1],
+          board[row + 1][col],
+          board[row + 1][col + 1],
+        ];
+
+        const winner = this.allSame(cells);
+
+        if (winner) {
+          return winner;
+        }
       }
     }
 
