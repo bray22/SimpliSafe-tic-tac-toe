@@ -10,7 +10,7 @@ export class TicTacToe {
   }
 
   public anyMovesLeft(board: Board): boolean {
-    throw new Error("Not implemented");
+    return board.some((row) => row.some((cell) => cell === null));
   }
 
   public isGameOver(board: Board): boolean {
