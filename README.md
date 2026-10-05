@@ -50,6 +50,6 @@ npm run typecheck
 ## AI assistance
 
 AI assistance was used for requirements discussion, implementation review,
-and updates to helper typing, tests, and documentation. Include the full
-exported AI session transcripts with the assessment submission; this
-disclosure is not a substitute for those transcripts.
+and updates to helper typing, tests, and documentation. The user/assistant
+conversation is included in [AI-TRANSCRIPT.md](./AI-TRANSCRIPT.md). It excludes
+tool outputs and records the conversation through the transcript export request.
