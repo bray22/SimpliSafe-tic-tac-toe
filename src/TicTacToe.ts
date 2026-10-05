@@ -7,9 +7,13 @@ export type Board = [Row, Row, Row, Row];
 export class TicTacToe {
   public checkWinner(board: Board): Player | null {
     this.validateBoard(board);
-    return this.checkRows(board) ?? this.checkColumns(board);
-  }
 
+    return (
+      this.checkRows(board) ??
+      this.checkColumns(board) ??
+      this.checkDiagonals(board)
+    );
+  }
   public anyMovesLeft(board: Board): boolean {
     return board.some((row) => row.some((cell) => cell === null));
   }
@@ -65,5 +69,23 @@ export class TicTacToe {
     }
 
     return null;
+  }
+
+  private checkDiagonals(board: Board): Player | null {
+    const leftToRight: Row = [
+      board[0][0],
+      board[1][1],
+      board[2][2],
+      board[3][3],
+    ];
+
+    const rightToLeft: Row = [
+      board[0][3],
+      board[1][2],
+      board[2][1],
+      board[3][0],
+    ];
+
+    return this.allSame(leftToRight) ?? this.allSame(rightToLeft);
   }
 }

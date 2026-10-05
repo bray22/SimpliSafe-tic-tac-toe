@@ -64,6 +64,19 @@ describe("TicTacToe", () => {
       }
     });
 
+     it("detects a left-to-right diagonal winner", () => {
+      const board: Board = [
+        ["X", null, null, null],
+        [null, "X", null, null],
+        [null, null, "X", null],
+        [null, null, null, "X"],
+      ];
+
+      expect(game.checkWinner(board)).toBe("X");
+    });
+
+   
+
     it("detects O winning in each row", () => {
       for (let row = 0; row < 4; row++) {
         const board: Board = [
@@ -146,15 +159,26 @@ describe("TicTacToe", () => {
       expect(game.checkWinner(board)).toBeNull();
     });
 
-    it("returns null when there is no horizontal or vertical winner", () => {
+    it("returns null when there is no horizontal, vertical, or diagonal winner", () => {
       const board: Board = [
         ["X", "O", "X", "O"],
         ["O", "X", "O", "X"],
-        ["X", "O", null, "O"],
-        ["O", "X", "O", "X"],
+        ["X", "O", null, "X"],
+        ["X", "X", "O", "O"],
       ];
 
       expect(game.checkWinner(board)).toBeNull();
+    });
+
+     it("detects a right-to-left diagonal winner", () => {
+      const board: Board = [
+        [null, null, null, "O"],
+        [null, null, "O", null],
+        [null, "O", null, null],
+        ["O", null, null, null],
+      ];
+
+      expect(game.checkWinner(board)).toBe("O");
     });
 
     it("throws for malformed board dimensions", () => {
